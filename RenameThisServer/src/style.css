@@ -1,0 +1,28 @@
+.MainGrid{
+    margin-top: 20%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 100px;
+    grid-template-areas: "a"
+
+}
+.a{
+    display: flex;
+    grid-area: a;
+    justify-content: space-evenly;
+    padding-top: 35px;
+}
+.SuperCoolBackground{
+    background-image: linear-gradient(45deg, papayawhip,lightgray, gray, black);
+    background-size: 300%;
+    animation: CoolAnimation infinite 40s;
+    border-radius: 10px;
+}
+@keyframes CoolAnimation {
+    0%{background-position: left}
+    50%{background-position: right}
+}
+body{
+    height: 100%;
+    background-color: dimgray;
+}
