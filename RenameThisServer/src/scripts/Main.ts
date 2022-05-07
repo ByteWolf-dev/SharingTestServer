@@ -8,15 +8,15 @@ function init(){
     let deleteBtn = document.getElementById('Delete');
     let patchBtn = document.getElementById('Patch');
 
-    SRM.LoadItems().then(function (){
-        postBtn.onclick = function (){
+    SRM.LoadItems().then(async () => {
+        postBtn.onclick = async () => {
             let testData : ServerData = {text : "Posting Test", done: true, id: SRM.itemsArray.length + 1};
-            SRM.PostData(testData);
+            await SRM.PostData(testData);
         };
 
         deleteBtn.onclick = async function (){
             await SRM.DeleteFiles(SRM.itemsArray);
-            SRM.LoadItems();
+            await SRM.LoadItems();
         };
 
         patchBtn.onclick = async function (){
@@ -80,12 +80,12 @@ class ServerRequestManager{
        });
     }
 
-    public async DeleteFiles(items : ServerData[]) : Promise<void> {
-        items.forEach(element => {
-            if(element.id != 1){
-                this.DeleteProcess(element.id);
+    public async DeleteFiles(items: ServerData[]): Promise<void> {
+        for (const file of items) {
+            if (file.id !== 1) {
+                await this.DeleteProcess(file.id);
             }
-        });
+        }
     }
     async DeleteProcess(toDeleteID : number) : Promise<void>{
         let deleteUrl = this.fixedUrl + `/${toDeleteID}`;

@@ -15,15 +15,15 @@ function init() {
     let postBtn = document.getElementById('Post');
     let deleteBtn = document.getElementById('Delete');
     let patchBtn = document.getElementById('Patch');
-    SRM.LoadItems().then(function () {
-        postBtn.onclick = function () {
+    SRM.LoadItems().then(() => __awaiter(this, void 0, void 0, function* () {
+        postBtn.onclick = () => __awaiter(this, void 0, void 0, function* () {
             let testData = { text: "Posting Test", done: true, id: SRM.itemsArray.length + 1 };
-            SRM.PostData(testData);
-        };
+            yield SRM.PostData(testData);
+        });
         deleteBtn.onclick = function () {
             return __awaiter(this, void 0, void 0, function* () {
                 yield SRM.DeleteFiles(SRM.itemsArray);
-                SRM.LoadItems();
+                yield SRM.LoadItems();
             });
         };
         patchBtn.onclick = function () {
@@ -32,7 +32,7 @@ function init() {
                 yield SRM.PatchData(testData);
             });
         };
-    });
+    }));
     console.log('init done');
 }
 class ServerRequestManager {
@@ -90,11 +90,11 @@ class ServerRequestManager {
     }
     DeleteFiles(items) {
         return __awaiter(this, void 0, void 0, function* () {
-            items.forEach(element => {
-                if (element.id != 1) {
-                    this.DeleteProcess(element.id);
+            for (const file of items) {
+                if (file.id !== 1) {
+                    yield this.DeleteProcess(file.id);
                 }
-            });
+            }
         });
     }
     DeleteProcess(toDeleteID) {
